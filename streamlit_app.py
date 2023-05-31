@@ -8,6 +8,7 @@ from bs4 import BeautifulSoup
 # Obtener la clave de API de OpenAI desde una variable de entorno
 api_key = os.getenv("OPENAI_API_KEY")
 
+
 # Función para realizar web scraping y obtener enlaces relevantes
 def get_relevant_links(query, num_links=5):
     # Realizar una búsqueda en Google
@@ -68,39 +69,47 @@ if custom_topic:
 # Preguntar al usuario sobre el nivel del curso
 course_level = st.sidebar.selectbox('Selecciona el nivel del curso:', ['Principiante', 'Intermedio', 'Avanzado'], key='level')
 
+# Preguntar al usuario sobre el número de lecciones deseadas (máximo: 5)
+num_lessons = st.sidebar.slider('Selecciona el número de lecciones:', 1, 5, 3)
+
 # Generar el contenido del curso
 if st.sidebar.button('Generar Curso'):
-    st.write(f'Generando un curso {course_level.lower()} sobre "{course_topic}"...')
+    st.write(f'Generando un curso {course_level.lower()} sobre "{course_topic}" con {num_lessons} lecciones...')
 
-    # Llamada a la API de GPT-3 para generar el contenido del curso
-    response = openai.Completion.create(
-        engine='text-davinci-003',
-        prompt=f"Curso sobre {course_topic}\n\nNivel: {course_level}\n\n",
-        max_tokens=2500,
-        n=1,
-        stop=None,
-        temperature=0.7
-    )
+    # Inicializar la lista de lecciones
+    lessons = []
 
-    # Obtener la respuesta generada por GPT-3
-    course_content = response.choices[0].text.strip()
+    # Generar contenido para cada lección
+    for i in range(num_lessons):
+        st.write(f'Generando contenido para la lección {i+1}...')
 
-    # Mostrar el contenido generado
-    st.write('Contenido del curso:')
-    st.write(course_content)
+        # Llamada a la API de GPT-3 para generar el contenido de la lección
+        response = openai.Completion.create(
+            engine='text-davinci-003',
+            prompt=f"Lección {i+1}: {course_topic}\nNivel: {course_level}\n\n",
+            max_tokens=750,
+            n=1,
+            stop=None,
+            temperature=0.7
+        )
 
-    # Generar y mostrar enlaces web relacionados (máximo: 5)
-    st.write('Enlaces web relacionados:')
-    links = get_relevant_links(course_topic, num_links=5)
-    for link in links:
-        st.write(link)
+        # Obtener la respuesta generada por GPT-3
+        lesson_content = response.choices[0].text.strip()
 
-    # Mostrar información adicional del curso
-    st.write('Información del curso:')
-    st.write('- Descripción:')
-    st.write('- Objetivo:')
-    st.write('- Duración:')
-    st.write('- Lista de contenidos:')
+        # Agregar la lección a la lista
+        lessons.append(lesson_content)
+
+        # Mostrar el contenido generado
+        st.write(f'Contenido de la lección {i+1}:')
+        st.write(lesson_content)
+
+        # Generar y mostrar enlaces web relacionados (máximo: 5)
+        st.write('Enlaces web relacionados:')
+        links = get_relevant_links(course_topic, num_links=5)
+        for link in links:
+            st.write(link)
+
+        st.write('---')
 
     # Mostrar el autor de la aplicación
     st.write('Hecho por Moris Polanco')
