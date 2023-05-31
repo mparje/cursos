@@ -8,7 +8,6 @@ from bs4 import BeautifulSoup
 # Obtener la clave de API de OpenAI desde una variable de entorno
 api_key = os.getenv("OPENAI_API_KEY")
 
-
 # Función para realizar web scraping y obtener enlaces relevantes
 def get_relevant_links(query, num_links=5):
     # Realizar una búsqueda en Google
@@ -95,6 +94,13 @@ if st.sidebar.button('Generar Curso'):
     links = get_relevant_links(course_topic, num_links=5)
     for link in links:
         st.write(link)
+
+    # Mostrar información adicional del curso
+    st.write('Información del curso:')
+    st.write('- Objetivo:')
+    st.write('- Descripción:')
+    st.write('- Duración:')
+    st.write('- Lista de contenidos:')
 
     # Mostrar el autor de la aplicación
     st.write('Hecho por Moris Polanco')
