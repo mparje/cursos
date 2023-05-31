@@ -29,10 +29,10 @@ def get_relevant_links(query, num_links=5):
     return links
 
 # Título de la aplicación
-st.title('Generador de Cursos')
+st.title('Generador de Cursos Personalizados')
 
 # Explicación sobre lo que hace la aplicación
-st.write('Esta aplicación genera cursos personalizados sobre diferentes temas de economía.')
+st.sidebar.write('Esta aplicación genera cursos personalizados sobre diferentes temas de economía.')
 
 # Temas disponibles para el curso
 topics = [
@@ -55,23 +55,23 @@ topics = [
 ]
 
 # Preguntar al usuario sobre el tema del curso
-course_topic = st.selectbox('Selecciona un tema:', topics, key='topic')
+course_topic = st.sidebar.selectbox('Selecciona un tema:', topics, key='topic')
 
 # Opción para escribir el nombre del curso
-custom_topic = st.text_input('O ingresa el nombre del curso manualmente:')
+custom_topic = st.sidebar.text_input('O ingresa el nombre del curso manualmente:')
 
 # Combinar el tema seleccionado y el tema personalizado
 if custom_topic:
     course_topic = custom_topic
 
 # Preguntar al usuario sobre el nivel del curso
-course_level = st.selectbox('Selecciona el nivel del curso:', ['Principiante', 'Intermedio', 'Avanzado'], key='level')
+course_level = st.sidebar.selectbox('Selecciona el nivel del curso:', ['Principiante', 'Intermedio', 'Avanzado'], key='level')
 
 # Preguntar al usuario sobre el número de lecciones deseadas (máximo: 5)
-num_lessons = st.slider('Selecciona el número de lecciones:', 1, 5, 3)
+num_lessons = st.sidebar.slider('Selecciona el número de lecciones:', 1, 5, 3)
 
 # Generar el contenido del curso
-if st.button('Generar Curso'):
+if st.sidebar.button('Generar Curso'):
     st.write(f'Generando un curso {course_level.lower()} sobre "{course_topic}" con {num_lessons} lecciones...')
 
     # Inicializar la lista de lecciones
@@ -110,4 +110,4 @@ if st.button('Generar Curso'):
         st.write('---')
 
     # Mostrar el autor de la aplicación
-    st.sidebar.markdown('Hecho por Moris Polanco')
+    st.write('Hecho por Moris Polanco')
