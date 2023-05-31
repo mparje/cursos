@@ -76,7 +76,7 @@ if st.sidebar.button('Generar Curso'):
     response = openai.Completion.create(
         engine='text-davinci-003',
         prompt=f"Curso sobre {course_topic}\n\nNivel: {course_level}\n\n",
-        max_tokens=3500,
+        max_tokens=2500,
         n=1,
         stop=None,
         temperature=0.7
@@ -97,8 +97,8 @@ if st.sidebar.button('Generar Curso'):
 
     # Mostrar información adicional del curso
     st.write('Información del curso:')
-    st.write('- Objetivo:')
     st.write('- Descripción:')
+    st.write('- Objetivo:')
     st.write('- Duración:')
     st.write('- Lista de contenidos:')
 
