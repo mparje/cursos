@@ -7,9 +7,6 @@ from bs4 import BeautifulSoup
 # Obtener la clave de API de OpenAI desde una variable de entorno
 api_key = os.getenv("OPENAI_API_KEY")
 
-# Configurar la API de OpenAI
-openai.api_key = api_key
-
 # Función para realizar web scraping y obtener enlaces relevantes
 def get_relevant_links(query, num_links=5):
     # Realizar una búsqueda en Google
