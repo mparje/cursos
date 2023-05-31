@@ -2,33 +2,9 @@ import os
 import streamlit as st
 st.set_page_config(layout="wide")
 import openai
-import requests
-from bs4 import BeautifulSoup
 
 # Obtener la clave de API de OpenAI desde una variable de entorno
 api_key = os.getenv("OPENAI_API_KEY")
-
-
-# Función para realizar web scraping y obtener enlaces relevantes
-def get_relevant_links(query, num_links=3):
-    # Realizar una búsqueda en Google
-    search_url = f'https://www.google.com/search?q={query}'
-    response = requests.get(search_url)
-    soup = BeautifulSoup(response.text, 'html.parser')
-
-    # Extraer los enlaces de los resultados de búsqueda
-    links = []
-    search_results = soup.select('.kCrYT a')
-    for result in search_results:
-        link = result.get('href')
-        if link.startswith('/url?q='):
-            link = link[7:]  # Eliminar el prefijo '/url?q='
-            links.append(link)
-
-        if len(links) == num_links:
-            break
-
-    return links
 
 # Título de la aplicación
 st.title('Generador de Cursos Personalizados')
@@ -102,12 +78,6 @@ if st.sidebar.button('Generar Curso'):
         # Mostrar el contenido generado
         st.write(f'Contenido de la lección {i+1}:')
         st.write(lesson_content)
-
-        # Generar y mostrar enlaces web relacionados (máximo: 5)
-        st.write('Enlaces web relacionados:')
-        links = get_relevant_links(course_topic, num_links=5)
-        for link in links:
-            st.write(link)
 
         st.write('---')
 
