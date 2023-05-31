@@ -1,10 +1,12 @@
+import os
 import streamlit as st
 import openai
 import requests
 from bs4 import BeautifulSoup
 
 # Configuración de OpenAI
-openai.api_key = 'TU_CLAVE_DE_API_DE_GPT3'
+openai.api_key = os.getenv(OPENAI_API_KEY)
+
 
 # Función para realizar web scraping y obtener enlaces relevantes
 def get_relevant_links(query, num_links=5):
@@ -28,14 +30,14 @@ def get_relevant_links(query, num_links=5):
     return links
 
 # Título de la aplicación
-st.title('Generador de Cursos Personalizados')
+st.title('Generador de Cursos')
 
 # Explicación sobre lo que hace la aplicación
 st.write('Esta aplicación genera cursos personalizados sobre diferentes temas de economía.')
 
 # Temas disponibles para el curso
 topics = [
-    'Introducción a la Escuela Austriaca de Economía',
+    'La Escuela Austriaca de Economía',
     'La Acción Humana, según Ludwig von Mises',
     'El emprendimiento, según Israel Kirzner',
     'Fundamentos de la moral, según Henry Hazlitt',
