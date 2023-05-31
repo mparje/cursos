@@ -10,7 +10,7 @@ api_key = os.getenv("OPENAI_API_KEY")
 
 
 # Función para realizar web scraping y obtener enlaces relevantes
-def get_relevant_links(query, num_links=5):
+def get_relevant_links(query, num_links=3):
     # Realizar una búsqueda en Google
     search_url = f'https://www.google.com/search?q={query}'
     response = requests.get(search_url)
@@ -87,7 +87,7 @@ if st.sidebar.button('Generar Curso'):
         response = openai.Completion.create(
             engine='text-davinci-003',
             prompt=f"Lección {i+1}: {course_topic}\nNivel: {course_level}\n\n",
-            max_tokens=750,
+            max_tokens=3750,
             n=1,
             stop=None,
             temperature=0.7
